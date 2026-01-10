@@ -6,7 +6,15 @@ local options = {
 }
 
 if platform.is_win then
-  options.default_prog = { "powershell" }
+  local wezterm = require("wezterm")
+  local pwsh_cmd = "powershell"
+  
+  local success, stdout = wezterm.run_child_process({ "where", "pwsh" })
+  if success and stdout and #stdout > 0 then
+    pwsh_cmd = "pwsh"
+  end
+  
+  options.default_prog = { pwsh_cmd }
   options.launch_menu = {
     { label = " PowerShell v1", args = { "powershell" } },
     { label = " PowerShell v7", args = { "pwsh" } },
@@ -22,10 +30,19 @@ if platform.is_win then
     },
   }
 elseif platform.is_mac then
-  options.default_prog = { "/opt/homebrew/bin/fish", "--login" }
+  -- 检查fish是否可用，如果不可用则使用zsh作为备用
+  local fish_path = "/usr/local/bin/fish"
+  local fish_cmd = io.open(fish_path, "r") and fish_path or nil
+  
+  if fish_cmd then
+    options.default_prog = { fish_cmd, "--login" }
+  else
+    options.default_prog = { "zsh", "--login" }
+  end
+  
   options.launch_menu = {
     { label = " Bash", args = { "bash", "--login" } },
-    { label = " Fish", args = { "/opt/homebrew/bin/fish", "--login" } },
+    { label = " Fish", args = { "/usr/local/bin/fish", "--login" } },
     { label = " Nushell", args = { "/opt/homebrew/bin/nu", "--login" } },
     { label = " Zsh", args = { "zsh", "--login" } },
   }
