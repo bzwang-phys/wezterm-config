@@ -23,13 +23,13 @@ return {
   },
   background = {
     {
-      source = { File = wezterm.config_dir .. "/backdrops/space.jpg" },
+      source = { File = wezterm.config_dir .. "/backdrops/1.jpg" },
     },
     {
       source = { Color = "#1A1B26" },
       height = "100%",
       width = "100%",
-      opacity = 0.95,
+      opacity = 0.75,
     },
   },
 

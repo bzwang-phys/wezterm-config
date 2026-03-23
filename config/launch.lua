@@ -6,14 +6,7 @@ local options = {
 }
 
 if platform.is_win then
-  local wezterm = require("wezterm")
-  local pwsh_cmd = "powershell"
-  
-  local success, stdout = wezterm.run_child_process({ "where", "pwsh" })
-  if success and stdout and #stdout > 0 then
-    pwsh_cmd = "pwsh"
-  end
-  
+  local pwsh_cmd = "pwsh"
   options.default_prog = { pwsh_cmd }
   options.launch_menu = {
     { label = " PowerShell v1", args = { "powershell" } },
