@@ -77,6 +77,24 @@ User facing docs and guide at: <a style="font-weight: bold;" href="https://wezte
 
 ## 使用方法
 
+### 一键安装
+
+macOS、Linux 或 Windows Git Bash：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/bzwang-phys/wezterm-config/main/install.sh | bash
+```
+
+Windows PowerShell：
+
+```powershell
+irm https://raw.githubusercontent.com/bzwang-phys/wezterm-config/main/install.ps1 | iex
+```
+
+如果目标目录中已有其他配置，安装脚本会先将其重命名为带时间戳的备份；如果已经安装了本仓库，则会拉取最新配置。安装完成后重启 WezTerm 即可。
+
+### 手动安装
+
 1、下载本储存库压缩包
 
 2、解压压缩包
@@ -128,4 +146,3 @@ win+r 输入 regedit 打开注册表编辑器，依次展开`HKEY_CLASSES_ROOT`
 
 
 **完成~~~ 享受**🎉🎉🎉
-

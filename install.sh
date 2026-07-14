@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
-# Install script for wezterm-config (Linux/macOS)
+# Install script for wezterm-config (Linux/macOS/Windows Git Bash)
 # Usage: curl -fsSL https://raw.githubusercontent.com/bzwang-phys/wezterm-config/main/install.sh | bash
 
 set -euo pipefail
 
 REPO="https://github.com/bzwang-phys/wezterm-config.git"
-CONFIG_DIR="${HOME}/.config/wezterm"
+
+if [[ "${OSTYPE:-}" == "msys"* || "${OSTYPE:-}" == "cygwin"* || "${OSTYPE:-}" == "win32"* ]]; then
+  # WezTerm looks under ~/.config/wezterm on Windows as well. Convert the
+  # Windows-style USERPROFILE when this script is running in Git Bash/Cygwin.
+  CONFIG_DIR="${USERPROFILE:-$HOME}/.config/wezterm"
+  if command -v cygpath &>/dev/null; then
+    CONFIG_DIR="$(cygpath -u "${CONFIG_DIR}")"
+  fi
+else
+  CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/wezterm"
+fi
 
 echo "==> Installing wezterm config to ${CONFIG_DIR}"
 
